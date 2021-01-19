@@ -1,0 +1,29 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.3
+      - name: Terraform Validate
+        run: |
+          # Find directory has terraform files
+          for DIR in $(find . -type f -name '*.tf' | sed -r 's|/[^/]+$||' |sort |uniq)
+          do
+            echo "Start initialize terraform in $DIR"
+            terraform init $DIR
+            echo 'Success initialize terraform'
+            echo "Start validate terraform files in $DIR"
+            terraform validate $DIR
+            echo "Success validate terraform files"
+          done
+        env:
+          AWS_DEFAULT_REGION: ap-northeast-2
