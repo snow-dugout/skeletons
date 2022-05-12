@@ -14,3 +14,4 @@ This is skeleton for several type based on personal experience.
       3. [PR template](.github/pull_request_template.md)
       4. For more templates by GitHub, See [docs](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
 2. [terraform](terraform)
+3. [python](python)

@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  interpreter:
+    image: ghcr.io/loustler/skeletons:python-3.9
+    working_dir: /opt/project
+    volumes:
+      - ~/.aws:/root/.aws:ro
+      - .:/opt/project:ro

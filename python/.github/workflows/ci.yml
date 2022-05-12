@@ -1,0 +1,53 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - release/v**
+    paths:
+      - ".github/workflows/ci.yml"
+      - "**.py"
+      - "pyproject.toml"
+  push:
+    branches:
+      - main
+      - develop
+      - release/v**
+    paths:
+      - ".github/workflows/ci.yml"
+      - "**.py"
+      - "pyproject.toml"
+
+jobs:
+  python:
+    name: Python Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ '3.9' ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ matrix.python-version }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.python-version }}-pip-
+      - uses: psf/black@stable
+      - uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+          cache: 'pip'
+      - name: Install packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Run test with pytest
+        run: pytest
+        env:
+          stage: test
