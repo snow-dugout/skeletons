@@ -1,0 +1,11 @@
+configuration:
+  - .github/**/*
+  - .gitignore
+  - "*.yml"
+
+enhancement:
+  - "**/*"
+
+documentation:
+  - "*.md"
+  - "**/*.md"
