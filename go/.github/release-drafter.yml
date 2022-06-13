@@ -1,0 +1,27 @@
+name-template: 'v$NEXT_PATCH_VERSION'
+
+tag-template: 'v$NEXT_PATCH_VERSION'
+
+categories:
+  - title: ':rocket: Feature'
+    labels:
+      - feature
+      - enhancement
+  - title: ':bug: Bug Fixes'
+    labels:
+      - bug
+  - title: ':seedling: Dependency Updates'
+    labels:
+      - dependency-update
+      - go
+  - title: ':envelope: Configuration'
+    labels:
+      - configuration
+  - title: ':wrench: Project Management'
+    labels:
+      - project-management
+      - github_actions
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+template: |
+  ## Changes
+  $CHANGES
