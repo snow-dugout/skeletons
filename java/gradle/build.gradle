@@ -1,0 +1,40 @@
+plugins {
+    id "java-library"
+
+    id "com.diffplug.spotless" version "6.5.2"
+
+    id("groovy-gradle-plugin")
+}
+
+spotless {
+    java {
+        googleJavaFormat("1.15.0").aosp()
+
+        importOrder("io.github.loustler", "", "javax", "java", "\\#")
+        removeUnusedImports()
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(11)
+        }
+    }
+}
+
+subprojects {
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    javadoc {
+        options.charSet = "UTF-8"
+        options.docEncoding = "UTF-8"
+        options.encoding = "UTF-8"
+    }
+}

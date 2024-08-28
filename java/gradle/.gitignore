@@ -1,0 +1,5 @@
+.*
+!.gitignore
+gradle/wrapper/gradle-wrapper.jar
+build/
+output/
