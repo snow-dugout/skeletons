@@ -1,0 +1,38 @@
+name: Continuous Integration
+
+on:
+  push:
+    paths:
+      - github/workflows.ci.yaml
+      - "**.py"
+      - pdm.lock
+      - pyproject.toml
+    branches:
+      - main
+  pull_request:
+    paths:
+      - github/workflows.ci.yaml
+      - "**.py"
+      - pdm.lock
+      - pyproject.toml
+
+jobs:
+  continuos-integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [ "3.12" ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: pdm-project/setup-pdm@v4
+        with:
+          cache: true
+      - name: Install all dependencies
+        run: pdm install
+      - name: Lint source codes
+        run: pdm lint
+      - name: Test source codes
+        run: pdm test
